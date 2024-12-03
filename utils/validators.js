@@ -24,7 +24,7 @@ const registerSchema = z.object({
 });
 
 const addressSchema = z.object({
-    number: z.string().regex(/^\d+$/).max(10).min(10),
+    phone: z.string().regex(/^\d+$/).max(10).min(10),
     address: z
         .string({
             required_error: "Address is required",

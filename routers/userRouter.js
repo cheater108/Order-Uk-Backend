@@ -11,17 +11,18 @@ import {
     updateCard,
 } from "../controllers/userController.js";
 import isLoggedIn from "../middleware/isLoggedIn.js";
+import catchAsync from "../utils/catchAsync.js";
 
 const router = Router();
 
-router.post("/login", handleLogin);
-router.post("/register", handleRegister);
-router.post("/address", isLoggedIn, postAddress);
-router.post("/card", isLoggedIn, postCard);
-router.get("/card", isLoggedIn, getCards);
-router.get("/card/:id", isLoggedIn, getCardById);
-router.get("/address", isLoggedIn, getAddress);
-router.delete("/card/:id", isLoggedIn, deleteCard);
-router.put("/card/:id", isLoggedIn, updateCard);
+router.post("/login", catchAsync(handleLogin));
+router.post("/register", catchAsync(handleRegister));
+router.post("/address", isLoggedIn, catchAsync(postAddress));
+router.post("/card", isLoggedIn, catchAsync(postCard));
+router.get("/card", isLoggedIn, catchAsync(getCards));
+router.get("/card/:id", isLoggedIn, catchAsync(getCardById));
+router.get("/address", isLoggedIn, catchAsync(getAddress));
+router.delete("/card/:id", isLoggedIn, catchAsync(deleteCard));
+router.put("/card/:id", isLoggedIn, catchAsync(updateCard));
 
 export default router;
