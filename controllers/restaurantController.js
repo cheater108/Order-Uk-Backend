@@ -35,4 +35,35 @@ async function getPopularRestaurants(req, res) {
     res.json({ popular_restaurants: popular_restaurants.data });
 }
 
-export { getMenu, getPopularRestaurants };
+async function searchProduct(req, res) {
+    const restaurant = await Restaurant.findOne({});
+    const { name } = req.query;
+
+    const burger = [];
+    const fries = [];
+    const cold_drinks = [];
+
+    for (const item of restaurant.menu) {
+        if (
+            item.item_type.toLowerCase().includes(name) ||
+            item.name.toLowerCase().includes(name)
+        ) {
+            switch (item.item_type) {
+                case "Burger":
+                    burger.push(item);
+                    break;
+                case "Fries":
+                    fries.push(item);
+                    break;
+                case "Cold Drinks":
+                    cold_drinks.push(item);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    res.json({ burger, fries, cold_drinks });
+}
+
+export { getMenu, getPopularRestaurants, searchProduct };
